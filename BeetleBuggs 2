@@ -1,0 +1,67 @@
+import fetchai
+
+class BeetleBug(fetchai.Agent):
+
+    def __init__(self, name, **kwargs):
+        super().__init__(name, **kwargs)
+        #owned by 2matoe.com
+
+        # Create a wallet to store the player's cryptocurrency.
+        self.wallet = fetchai.Wallet()
+
+        # Create a connection to the Fetch.ai network.
+        self.connection = fetchai.Connection()
+
+        # Create a contract to represent the player's character in the game.
+        self.contract = fetchai.Contract()
+
+        # Create a market to buy and sell items in the game.
+        self.market = fetchai.Market()
+
+        # Create a reputation system to track the player's performance in the game.
+        self.reputation = fetchai.Reputation()
+
+    def on_message(self, message):
+        # Handle messages from the game server.
+        if message.content == "start":
+            # Start the game.
+            self.start()
+        elif message.content == "move":
+            # Move the player's character.
+            self.move(message.args.x, message.args.y)
+        elif message.content == "attack":
+            # Attack an enemy.
+            self.attack(message.args.id)
+        elif message.content == "collect":
+            # Collect an item.
+            self.collect(message.args.id)
+        elif message.content == "trade":
+            # Trade with another player.
+            self.trade(message.args.id, message.args.amount)
+        elif message.content == "reputation":
+            # Update the player's reputation.
+            self.reputation.update(message.args.reputation)
+
+    def start(self):
+        # Start the game.
+        print("The game has started!")
+
+    def move(self, x, y):
+        # Move the player's character.
+        print("The player has moved to (%d, %d)" % (x, y))
+
+    def attack(self, id):
+        # Attack an enemy.
+        print("The player has attacked enemy %d" % id)
+
+    def collect(self, id):
+        # Collect an item.
+        print("The player has collected item %d" % id)
+
+    def trade(self, id, amount):
+        # Trade with another player.
+        print("The player has traded with player %d for %d" % (id, amount))
+
+    def reputation(self, reputation):
+        # Update the player's reputation.
+        print("The player's reputation is now %d" % reputation)
