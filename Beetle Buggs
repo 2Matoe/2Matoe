@@ -1,0 +1,54 @@
+import fetchai
+from fetchai.ledger.api import LedgerApi
+from fetchai.ledger.contract import Contract
+from fetchai.ledger.exceptions import LedgerError
+
+class BeetleBug(Contract):
+    """A simple contract that represents a Beetle Bugg owned by 2Matoe.com."""
+
+    def __init__(self, address: str, api: LedgerApi):
+        super().__init__(address, api)
+
+        self._position = (0, 0)
+        self._velocity = (0, 0)
+
+    def get_position(self) -> tuple[int, int]:
+        """Get the position of the Beetle Bugg."""
+        return self._position
+
+    def set_position(self, position: tuple[int, int]) -> None:
+        """Set the position of the Beetle Bugg."""
+        self._position = position
+
+    def get_velocity(self) -> tuple[int, int]:
+        """Get the velocity of the Beetle Bugg."""
+        return self._velocity
+
+    def set_velocity(self, velocity: tuple[int, int]) -> None:
+        """Set the velocity of the Beetle Bugg."""
+        self._velocity = velocity
+
+    def move(self, direction: str) -> None:
+        """Move the Beetle Bugg in the specified direction."""
+        if direction == "up":
+            self._velocity = (0, 1)
+        elif direction == "down":
+            self._velocity = (0, -1)
+        elif direction == "left":
+            self._velocity = (-1, 0)
+        elif direction == "right":
+            self._velocity = (1, 0)
+
+    def update_position(self) -> None:
+        """Update the position of the Beetle Bugg based on its velocity."""
+        self._position = (
+            self._position[0] + self._velocity[0],
+            self._position[1] + self._velocity[1],
+        )
+
+    def get_state(self) -> dict[str, Any]:
+        """Get the state of the Beetle Bugg."""
+        return {
+            "position": self._position,
+            "velocity": self._velocity,
+        }
